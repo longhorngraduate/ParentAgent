@@ -1,0 +1,222 @@
+﻿@model ParentAgent.Models.ResponseMainViewModel
+@{
+    var oParent = Model.Parent;
+    var oStudent = Model.Student;
+    var oCourse = Model.Course;
+
+    var oCourses = Model.Student.Courses;
+
+
+    var DashboardDetails = oStudent.FirstName;
+    if (oCourse.CourseId > 0)
+    {
+        DashboardDetails += " - " + oCourse.Name;
+    }
+}
+
+<!-- full Title -->
+<div class="full-title">
+    <div class="container">
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3"> Contact </h1>
+        <div class="breadcrumb-main">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/Index">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Dashboard (@DashboardDetails)</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="contact-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <a href="/Dashboard/NewStudent" class="btn btn-block btn-primary">Add Student</a>
+                <hr />
+                @{
+                    if (oParent.Children != null)
+                    {
+                        foreach (var iStudent in oParent.Children)
+                        {
+                            <a href="/Dashboard/Index/@iStudent.StudentId/0" class="btn btn-block btn-primary">@iStudent.FirstName</a>
+                            <br />
+                        }
+                    }
+                }
+            </div>
+
+            @*@if (Model.IsAdmin)
+                {
+                    <div class="col-md-9">
+                        <div class="card-header">Admin</div>
+                        <div class="card-body">
+                            <a href="/Dashboard/NewQuestion" class="btn btn-danger">Add Question</a>
+                        </div>
+                    </div>
+                }*@
+
+        <div class="col-md-9">
+            @{
+                if (oStudent.StudentId > 0)
+                {
+                    <div class="card">
+                        <div class="card-header">@oStudent.FirstName @oStudent.LastName</div>
+                        <div class="card-body">
+                            <a href="/Dashboard/EditStudent/@oStudent.StudentId" class="btn btn-block btn-primary">Edit @oStudent.FirstName's Information</a>
+                            <a href="/Dashboard/NewCourse/@oStudent.StudentId" class="btn btn-block btn-primary">Add Course</a>
+                        </div>
+                    </div>
+                    <br />
+
+
+                    if (oCourses.Count > 0)
+                    {
+                        <div class="card">
+                            <div class="card-header">Courses</div>
+                            <div class="card-body">
+                                @foreach (var iCourse in oCourses)
+                                {
+                                    <a href="/Dashboard/Index/@oStudent.StudentId/@iCourse.CourseId" class="btn btn-block btn-primary">@iCourse.Name</a>
+                                }
+                            </div>
+                        </div>
+                        <br />
+                    }
+
+
+                    if (oCourse.CourseId > 0)
+                    {
+                        var oTeacher = oCourse.Teacher;
+
+                        <div class="card">
+                            <div class="card-header">
+                                @oCourse.Name
+                            </div>
+                            <div class="card-body">
+                                <a href="/Dashboard/EditCourse/@oStudent.StudentId/@oCourse.CourseId" class="btn btn-block btn-primary">Edit Course Information</a>
+                                @*<br />
+                                <div>What would you like for us to chat about with @oTeacher.Honorific @oTeacher.LastName for this upcoming week?</div>*@
+                                <a href="/Parent/Questions/@oParent.ParentId/@oStudent.StudentId/@oCourse.CourseId" class="btn btn-block btn-primary">Ask @oTeacher.Honorific @oTeacher.LastName Questions</a>
+                                <br />
+                                <div class="container navbar-toggles">@*The class navbar-toggles removes the mouse-pointer class and js*@
+                                    <canvas id="chart_line_classAvg" style=""></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                }
+            }
+        </div>
+
+
+
+        </div>
+    </div>
+    <!-- /.container -->
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        //---------- $(document).ready() ----------
+$(document).ready(function () {
+
+    //------------------------------ OnLoad ------------------------------
+
+    //----- Success/Failure Message -----
+    @if(TempData["UserMessage"] != null)
+    {
+        var message = (ParentAgent.Helpers.MessageVM)TempData["UserMessage"];
+
+        if (message.IsSuccessful == true)
+        {
+            @:toastr.success("@message.Title  @message.Message");
+        }
+        else
+        {
+            @:toastr.error("@message.Title  @message.Message");
+        }
+      }
+    //----- end of Success/Failure Message -----
+
+
+    //----- Chart - line - Class Average -----
+    //https://www.chartjs.org/docs/latest/charts/line.html#point-styling
+    var ctx = document.getElementById('chart_line_classAvg');
+    
+    if (ctx) {
+        ctx.getContext('2d');
+
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: ['Aug W2', 'Aug W3', 'Aug W4', 'Sept W1', 'Sept W2', 'Sept W3', 'Sept W4', 'Sept W5', 'Oct W1', 'Oct W2', 'Oct W3', 'Oct W4', 'Nov W1', 'Nov W2', 'Nov W3', 'Nov W4', 'Dec W1', 'Dec W2'],
+                datasets: [{
+                    label: 'Sample Semester - Weekly Estimated GPA',
+                    fill: false,
+                    data: [80, 80, 70, 80, 83, 87, 85, 90, 95],
+
+                    //Point
+                    pointBackgroundColor: 'rgb(151, 222, 219)',//'rgb(255, 99, 132)',
+                    pointBorderColor: 'rgb(151, 222, 219)',
+                    pointBorderWidth: 2,
+                    pointHitRadius: 15,
+                    pointRadius: 7,
+                    pointRotation: '45',
+                    pointStyle: 'rectRounded',
+                    pointHoverBackgroundColor: 'rgb(151, 222, 219)',
+                    pointHoverBorderColor: 'rgb(151, 222, 219)',
+                    pointHoverBorderColor: 'rgb(0, 0, 0)',
+                    pointHoverBorderWidth: 2,
+                    pointHoverRadius: 7,
+
+                    //Line
+                    backgroundColor: 'rgb(151, 222, 219)',//'rgb(255, 99, 132)',//'rgb(255,255,255, 0.0)',
+                    borderColor: 'rgb(151, 222, 219)',//'rgb(255, 99, 132)',
+                    lineTension: 0
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+                title: {
+                    text: 'This is a Sample Line Graph'
+                },
+                scales: {
+                    xAxes: [{
+                        //type: 'time',
+                        //time: {
+                        //    parser: timeFormat,
+                        //    // round: 'day'
+                        //    tooltipFormat: 'll HH:mm'
+                        //},
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Week'
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'GPA'
+                        }
+                    }]
+                }
+            }
+        });
+    }
+    //----- end of Chart - line - Class Average -----
+    //------------------------------ end of OnLoad ------------------------------
+    });
+        //---------- end of $(document).ready() ----------
+    </script>
+
+}

@@ -1,0 +1,201 @@
+﻿@model ParentAgent.Models.ResponseReportsViewModel
+@{
+    var oParents = Model.Parents;
+    var oQuestionHistorys = Model.QuestionHistorys;
+}
+
+<!-- full Title -->
+<div class="full-title">
+    <div class="container">
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3"> Contact </h1>
+        <div class="breadcrumb-main">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/Index">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Dashboard (Staff)</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="contact-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">Parents</div>
+                    <div class="card-body">
+                        <ul>
+                            <li>
+                                <a href="/Staff/Index/ViewParents_withNewQuestions" class="">Parents (with New Questions)</a>@*btn btn-block btn-primary*@
+                            </li>
+                            <li>
+                                <a href="/Staff/Index/ViewParents_Active" class="">Parents (Active)</a>
+                            </li>
+                            <li>
+                                <a href="/Staff/Index/ViewParents_Inactive" class="">Parents (Inactive)</a>
+                            </li>
+                            <li>
+                                <a href="/Staff/Index/ViewParents_All" class="">Parents (All)</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Parents (New)</div>
+                    <div class="card-body">
+                        <ul>
+                            <li>
+                                <a href="/Staff/Index/ViewParents_New" class="">New Parents (account created < 7 days)</a>
+                            </li>
+                            <li>
+                                <a href="/Staff/Index/ViewParents_neverAskedQuestions" class="">New Parents (Never Asked Questions)</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Questions</div>
+                    <div class="card-body">
+                        <ul>
+                            <li>
+                                <a href="/Staff/Index/ViewQuestions_Pending" class="">View Questions (Pending)</a>
+                            </li>
+                            <li>
+                                <a href="/Staff/Index/ViewQuestions_All" class="">View Questions (All)</a>- will be deleted in the future
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- -------------------- RESULTS -------------------- -->
+            <div class="col-md-9">
+                @{
+                    if (oParents.Count > 0)
+                    {
+                        <div class="card">
+                            <div class="card-header">@Model.NameOfReport</div>
+                            <div class="card-body">
+                                <table class="table table-striped table-responsive table-hover">
+                                    <thead>
+                                        <tr class="">
+                                            <th class="">Parent Name</th>
+                                        </tr>
+                                    </thead>
+                                    @foreach (var iParent in oParents)
+                                    {
+                                        <tr class="">
+                                            <td class="">
+                                                <a href="/Staff/Parent/@iParent.ParentId" class="">@iParent.FirstName @iParent.LastName</a>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    else if (oQuestionHistorys.Count > 0)
+                    {
+                        <div class="card">
+                            <div class="card-header">@Model.NameOfReport</div>
+                            <div class="card-body">
+                                <table class="table table-striped table-responsive table-hover">
+                                    <thead>
+                                        <tr class="">
+                                            <th class="">Parent Name</th>
+                                            <th class="">Student</th>
+                                            <th class="">Course</th>
+                                            <th class="">Question</th>
+                                        </tr>
+                                    </thead>
+                                    @{
+                                        foreach (var iQuestionHistory in oQuestionHistorys)
+                                        {
+                                            <tr class="">
+                                                <td class="">
+                                                    <a href="/Staff/Parent/@iQuestionHistory.Parent.ParentId" class="">@iQuestionHistory.Parent.FirstName @iQuestionHistory.Parent.LastName</a>
+                                                </td>
+                                                <td class="">
+                                                    @iQuestionHistory.Student.FirstName @iQuestionHistory.Student.LastName
+                                                </td>
+                                                <td class="">
+                                                    @iQuestionHistory.Course.Name
+                                                </td>
+                                                <td class="">
+                                                    @iQuestionHistory.QuestionTxt
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    else if (Model.NameOfReport != "")
+                    {
+                        <div class="card">
+                            <div class="card-header">@Model.NameOfReport</div>
+                            <div class="card-body">
+                                No Results
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card">
+                            <div class="card-header">Hi :)</div>
+                            <div class="card-body">
+                                Choose a report
+                            </div>
+                        </div>
+                    }
+                    <br />
+                }
+            </div>
+            <!-- -------------------- end of RESULTS -------------------- -->
+
+
+        </div>
+    </div>
+    <!-- /.container -->
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        //---------- $(document).ready() ----------
+$(document).ready(function () {
+
+    //------------------------------ OnLoad ------------------------------
+
+    //----- Success/Failure Message -----
+    @if(TempData["UserMessage"] != null)
+    {
+        var message = (ParentAgent.Helpers.MessageVM)TempData["UserMessage"];
+
+        if (message.IsSuccessful == true)
+        {
+            @:toastr.success("@message.Title  @message.Message");
+        }
+        else
+        {
+            @:toastr.error("@message.Title  @message.Message");
+        }
+      }
+    //----- end of Success/Failure Message -----
+
+
+    //------------------------------ end of OnLoad ------------------------------
+    });
+    //---------- end of $(document).ready() ----------
+    </script>
+
+}

@@ -1,0 +1,204 @@
+﻿@{
+
+}
+
+<!-- full Title -->
+<div class="full-title">
+    <div class="container">
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3"> Contact </h1>
+        <div class="breadcrumb-main">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/Index">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Contact</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="contact-main">
+    <div class="container">
+        <!-- Content Row -->
+        <div class="row">
+            <!-- Map Column -->
+            <div class="col-lg-8 mb-4 contact-left">
+                <h3>Feel free to message us anytime about anything.</h3>
+                <form name="sentMessage" id="contactForm" @*novalidate*@>
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <input type="text" placeholder="Full Name" class="form-control" id="name" required data-validation-required-message="Please enter your name.">
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <input type="tel" placeholder="Phone Number" class="form-control" id="phone" required data-validation-required-message="Please enter your phone number.">
+                        </div>
+                    </div>
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <input type="email" placeholder="Email Address" class="form-control" id="email" required data-validation-required-message="Please enter your email address.">
+                        </div>
+                    </div>
+                    @*<div class="control-group form-group">
+                        <div class="controls">
+                            <input type="email" name="emailAgain"
+                                   data-validation-matches-match="email"
+                                   data-validation-matches-message="Must match email address entered above">
+                        </div>
+                    </div>*@
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <textarea rows="5" cols="100" placeholder="Message" class="form-control" id="message" required data-validation-required-message="Please enter your message" maxlength="999" style="resize:none"></textarea>
+                        </div>
+                    </div>
+                    <div id="success"></div>
+                    <!-- For success/fail messages -->
+                    <button type="submit" class="btn btn-primary js-btn-hover" id="sendMessageButton">Send Message</button>
+                </form>
+            </div>
+            <!-- Contact Details Column -->
+            <div class="col-lg-4 mb-4 contact-right">
+                <h3>Contact Details</h3>
+                <p>
+                    @*3481 Melrose Place
+                    <br>Dallas, TX 75201*@
+                    Currently only serving the DFW area.
+                    <br>
+                </p>
+                @*<p>
+                    <abbr title="Phone">P</abbr>: (469) 360-2747
+                </p>*@
+                <p>
+                    <abbr title="Email">E</abbr>:
+                    <a href="mailto:admin@ParentAgent.com"> admin@ParentAgent.com </a>
+                </p>
+                <p>
+                    <abbr title="Hours">H</abbr>: Monday - Friday: 9:00 AM to 7:00 PM
+                    <br />
+                    <abbr title="Hours">H</abbr>: Saturday - Sunday: 9:00 AM to 5:00 PM
+                </p>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+</div>
+
+<div class="map-main">
+    <!-- Embedded Google Map -->
+    @*<iframe width="100%" height="300px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?hl=en&amp;ie=UTF8&amp;ll=37.0625,-95.677068&amp;spn=56.506174,79.013672&amp;t=m&amp;z=4&amp;output=embed"></iframe>*@
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        //---------- $(document).ready() ----------
+$(document).ready(function () {
+
+    //----- OnLoad -----
+    $(function () {
+        $("input,select,textarea").not("[type=submit]").jqBootstrapValidation({
+            preventSubmit: true,
+            submitSuccess: function ($form, event) {
+                event.preventDefault();
+
+                $this = $('#sendMessageButton');
+                $this.prop('disabled', true);
+
+                //var form_data = $("#contactForm").serialize();
+                var postdata = {
+                    name: $("#name").val(),
+                    phone: $("#phone").val(),
+                    email: $("#email").val(),
+                    message: $("#message").val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "Home/Send",
+                    data: postdata,
+                    success: function (retval) {
+                        if (retval == "OK") {
+                            $('#success').html("<div class='alert alert-success'><strong>Your message has been sent.</strong></div>");
+                            $('#contactForm').trigger('reset');
+
+                            toastr.success("Message received!  We will contact you as soon as possible.");
+                        }
+                        else {
+                            $('#success').html("<div class='alert alert-danger'>There is an error.</div>");
+                            toastr.error("Message not sent.  Please try again later.");
+                        }
+                    },
+                    error: function (retval) {
+                        $('#success').html("<div class='alert alert-danger'>There is an error.</div>");
+                        toastr.error("Message not sent.  Please try again later.");
+                    },
+                    complete: function () {
+                        setTimeout(function () {
+                            $this.prop("disabled", false);
+                            $('#success').html('');
+                        }, 5000);
+                    }
+                });
+
+            }
+        });
+    });
+
+    //$("#contactForm").validate({
+    //    rules: {
+    //        asdf
+    //    }
+    //});
+    //----- end of OnLoad -----
+
+    //----- EVENTS -----
+    //-- Send --
+    //$("#sendMessageButton").click(function () {
+
+    //    if ($("#contactForm").validate()) {
+    //        alert("validated true");
+    //    }
+    //    else {
+    //        var postdata = {
+    //            name: $("#name").val(),
+    //            phone: $("#phone").val(),
+    //            email: $("#email").val(),
+    //            message: $("#message").val()
+    //        };
+
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "Send",
+    //            data: postdata,
+    //            success: function (retval) {
+    //                if (retval == "OK") {
+    //                    toastr.success("Message received!  We will contact you as soon as possible.");
+    //                }
+    //                else {
+    //                    toastr.error("Message not sent.  Please try again later.");
+    //                }
+    //            },
+    //            error: function (retval) {
+    //                toastr.error("Message not sent.  Please try again later.");
+    //            }
+    //        });
+    //    }
+
+    //});
+    //-- end of Send --
+
+    //----- end of EVENTS -----
+
+    //---------- FUNCTIONS ----------
+
+    //---------- end of FUNCTIONS ----------
+
+});
+        //---------- end of $(document).ready() ----------
+    </script>
+
+}

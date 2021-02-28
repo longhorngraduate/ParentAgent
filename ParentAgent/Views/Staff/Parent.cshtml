@@ -1,0 +1,263 @@
+﻿@model ParentAgent.Models.ResponseQuestionsViewModel
+@{
+    var oParent = Model.Parent;
+    var oQuestionHistorysResponded = Model.QuestionHistorys;
+    var oQuestionHistorysPending = Model.QuestionHistorysPending;
+}
+
+<!-- full Title -->
+<div class="full-title">
+    <div class="container">
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3"> Contact </h1>
+        <div class="breadcrumb-main">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/Index">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/Dashboard/Index">Dashboard (Staff)</a>
+                </li>
+                <li class="breadcrumb-item active">Questions</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="contact-main">
+    <div class="container">
+        <div class="row">
+
+
+            <!-- -------------------- RESULTS -------------------- -->
+            <div class="col-md-12">
+
+                <!-- ---------- Parent Info ---------- -->
+                <div class="card">
+                    <div class="card-header">@oParent.FirstName @oParent.LastName</div>
+                    <div class="card-body">
+                        <table class="table table-striped table-responsive table-hover">
+                            <tr class="">
+                                <td class="">Username</td>
+                                <td class="">@oParent.Username</td>
+                            </tr>
+                            <tr class="">
+                                <td class="">Active</td>
+                                <td class="">@oParent.Active</td>
+                            </tr>
+                            <tr class="">
+                                <td class="">Gender</td>
+                                <td class="">@oParent.Gender</td>
+                            </tr>
+                            <tr class="">
+                                <td class="">NumOfChildren</td>
+                                <td class="">@oParent.NumOfChildren</td>
+                            </tr>
+                            <tr class="">
+                                <td class="">Email</td>
+                                <td class="">@oParent.Email</td>
+                            </tr>
+                            <tr class="">
+                                <td class="">Phone</td>
+                                <td class="">@oParent.Phone</td>
+                            </tr>
+                            <tr class="">
+                                <td class="">Address</td>
+                                <td class="">@oParent.Address</td>
+                            </tr>
+                            <tr class="">
+                                <td class="">Date Joined</td>
+                                <td class="">@oParent.DateCreated</td>
+                            </tr>
+                            <tr class="">
+                                <td class="">Last Logged In</td>
+                                <td class="">@oParent.LastConnect</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <br />
+                <!-- ---------- end of Parent Info ---------- -->
+                <!-- ---------- Questions ---------- -->
+                @{
+                    if (oQuestionHistorysPending.Count > 0)
+                    {
+                        <div class="card">
+                            <div class="card-header">
+                                Questions (Pending)
+                                <!-- Send Emails -->
+                                <div class="float-right">
+                                    @using (Html.BeginForm("SendEmailsToTeachers", "Staff", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                        <input type="hidden" id="QuestionHistoryVM_ParentId" name="QuestionHistoryVM.ParentId" value="@oParent.ParentId" />
+                                        <input type="hidden" id="QuestionHistoryVM_QuestionTxt" name="QuestionHistoryVM.QuestionTxt" value="trash" />
+                                        <input type="submit" value="Send ALL Emails to ALL Teachers" class="btn btn-primary js-btn-hover" />
+                                    }
+                                </div>
+                                <!-- end of Send Emails -->
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm table-striped table-hover">
+                                    @*<colgroup>
+                                            <col class="col-md-1">
+                                            <col class="col-md-1">
+                                            <col class="col-md-4">
+                                            <col class="col-md-2">
+                                            <col class="col-md-2">
+                                            <col class="col-md-2">
+                                        </colgroup>*@
+                                    <thead>
+                                        <tr class="d-flex">
+                                            <th class="col-md-1">Student</th>
+                                            <th class="col-md-1">Course</th>
+                                            <th class="col-md-4">Parent Question</th>
+                                            <th class="col-md-1">Num Of Times Sent To Teacher</th>
+                                            <th class="col-md-2">Teacher Response</th>
+                                            <th class="col-md-2">Parent Agent Notes</th>
+                                            <th class="col-md-1">Last Updated</th>
+                                        </tr>
+                                    </thead>
+                                    @{
+                                        foreach (var iQuestionHistory in oQuestionHistorysPending)
+                                        {
+                                            Model.QuestionHistoryVM.QuestionTxt = iQuestionHistory.QuestionTxt;
+
+                                            <tr class="d-flex">
+                                                <td class="col-md-1">@iQuestionHistory.Student.FullName</td>
+
+                                                <td class="col-md-1">@iQuestionHistory.Course.Name</td>
+
+                                                <td class="col-md-4">
+                                                    @*@Html.DisplayFor(model => iQuestionHistory.QuestionTxt)*@
+                                                    @using (Html.BeginForm("EditQuestionHistory", "Parent", FormMethod.Post))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+
+
+                                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                        <div class="form-group">
+                                                            <div class="col-md-12">
+                                                                @Html.EditorFor(model => model.QuestionHistoryVM.QuestionTxt, new { htmlAttributes = new { @class = "form-control", @cols = 10, @rows = 4 } })
+                                                                @Html.ValidationMessageFor(model => model.QuestionHistoryVM.QuestionTxt, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <div class="col-md-offset-2 col-md-10">
+                                                                <input type="hidden" id="QuestionHistoryVM_QuestionHistoryId" name="QuestionHistoryVM.QuestionHistoryId" value="@iQuestionHistory.QuestionHistoryId" />
+                                                                <input type="hidden" id="QuestionHistoryVM_ParentId" name="QuestionHistoryVM.ParentId" value="@oParent.ParentId" />
+                                                                <input type="hidden" id="QuestionHistoryVM_StudentId" name="QuestionHistoryVM.StudentId" value="@iQuestionHistory.Student.StudentId" />
+                                                                <input type="hidden" id="QuestionHistoryVM_CourseId" name="QuestionHistoryVM.CourseId" value="@iQuestionHistory.Course.CourseId" />
+                                                                <input type="submit" value="Update" class="btn btn-primary js-btn-hover" />
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </td>
+
+                                                <td class="col-md-1">@iQuestionHistory.NumOfTimesSentToTeacher</td>
+
+                                                <td class="col-md-2">@iQuestionHistory.Answer</td>
+
+                                                <td class="col-md-2">@iQuestionHistory.OtherAnswer</td>
+
+                                                <td class="col-md-1">@iQuestionHistory.DateAnswered</td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                        <br />
+                    }
+
+                    if (oQuestionHistorysResponded.Count > 0)
+                    {
+                        <div class="card">
+                            <div class="card-header">
+                                Questions (Responded)
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-striped table-responsive table-hover">
+                                    <thead>
+                                        <tr class="">
+                                            <th class="">Parent Question</th>
+                                            <th class="">Teacher Response</th>
+                                            <th class="">Parent Agent Notes</th>
+                                            <th class="">Last Updated</th>
+                                        </tr>
+                                    </thead>
+                                    @{
+                                        foreach (var iQuestionHistory in oQuestionHistorysResponded)
+                                        {
+                                            <tr class="">
+                                                <td class="">
+                                                    @Html.DisplayFor(model => iQuestionHistory.QuestionTxt)
+                                                </td>
+
+                                                <td class="">
+                                                    @Html.DisplayFor(model => iQuestionHistory.Answer)
+                                                </td>
+
+                                                <td class="">
+                                                    @Html.DisplayFor(model => iQuestionHistory.OtherAnswer)
+                                                </td>
+
+                                                <td class="">
+                                                    @Html.DisplayFor(model => iQuestionHistory.DateAnswered)
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                        <br />
+                    }
+
+                }
+                <!-- ---------- end of Questions ---------- -->
+
+            </div>
+            <!-- -------------------- end of RESULTS -------------------- -->
+
+
+        </div>
+    </div>
+    <!-- /.container -->
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        //---------- $(document).ready() ----------
+$(document).ready(function () {
+
+    //------------------------------ OnLoad ------------------------------
+
+    //----- Success/Failure Message -----
+    @if(TempData["UserMessage"] != null)
+    {
+        var message = (ParentAgent.Helpers.MessageVM)TempData["UserMessage"];
+
+        if (message.IsSuccessful == true)
+        {
+            @:toastr.success("@message.Title  @message.Message");
+        }
+        else
+        {
+            @:toastr.error("@message.Title  @message.Message");
+        }
+      }
+    //----- end of Success/Failure Message -----
+
+
+    //------------------------------ end of OnLoad ------------------------------
+    });
+    //---------- end of $(document).ready() ----------
+    </script>
+
+}

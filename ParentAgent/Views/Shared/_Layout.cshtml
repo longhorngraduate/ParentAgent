@@ -1,0 +1,352 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@ViewBag.Title - Parent Agent</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+    <script>
+                        // --------- FB --------- 991 and 992
+                        //window.fbAsyncInit = function () {
+                        //    FB.init({
+                        //        appId: '',
+                        //        cookie: true,
+                        //        xfbml: true,
+                        //        version: 'v7.0'
+                        //    });
+
+                        //    FB.AppEvents.logPageView();
+
+                        //    FB.getLoginStatus(function (response) {
+                        //        statusChangeCallback(response);
+                        //    });
+                        //};
+
+                        //    //THE RESPONSE:
+                        //    //{
+                        //    //    status: 'connected',
+                        //    //        authResponse: {
+                        //    //        accessToken: '...',
+                        //    //            expiresIn: '...',
+                        //    //                signedRequest: '...',
+                        //    //                    userID: '...'
+                        //    //    }
+                        //    //}
+                        //    //-- end of FB Login --
+
+                        //function checkLoginState() {
+                        //    FB.getLoginStatus(function (response) {
+                        //        statusChangeCallback(response);
+                        //    });
+                        //}
+
+                        //function statusChangeCallback(response) {
+                        //    //Once your app knows the login status of the person using it, it can do one of the following:
+                        //    //If the person is logged into Facebook and your app, redirect them to your app's logged in experience.
+                        //    //If the person isn't logged into your app, or isn't logged into Facebook, prompt them with the Login dialog with FB.login() or show them the Login Button.
+                        //    if (response.status === 'connected') {
+                        //        console.log(response.authResponse.accessToken);
+                        //    }
+                        //}
+
+                        ////(function (d, s, id) {                      // Load the SDK asynchronously
+                        ////    var js, fjs = d.getElementsByTagName(s)[0];
+                        ////    if (d.getElementById(id)) return;
+                        ////    js = d.createElement(s); js.id = id;
+                        ////    js.src = "https://connect.facebook.net/en_US/sdk.js";
+                        ////    fjs.parentNode.insertBefore(js, fjs);
+                        ////}(document, 'script', 'facebook-jssdk'));
+                        //// --------- end of FB ---------
+
+
+                        ////(function (d, s, id) {
+                        ////    var js, fjs = d.getElementsByTagName(s)[0];
+                        ////    if (d.getElementById(id)) { return; }
+                        ////    js = d.createElement(s); js.id = id;
+                        ////    js.src = "https://connect.facebook.net/en_US/sdk.js";
+                        ////    fjs.parentNode.insertBefore(js, fjs);
+                        ////}(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <div class="wrapper-main">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="social-media">
+                            <ul>
+                                <li><a href="https://www.facebook.com/Parent-Agent-101080284977781"><i class="fab fa-facebook-f"></i></a></li>
+                                @*<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>*@
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="contact-details">
+                            <ul>
+                                @*<li><i class="fas fa-phone fa-rotate-90"></i> (469) 360-2747</li>*@
+                                <li><i class="fas fa-map-marker-alt"></i> Currently only serving the DFW area</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-light top-nav">
+            <div class="container">
+                <a class="navbar-brand" href="/Index">
+                    <img src="/images/logo_3Students.png" alt="logo" />
+                </a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fas fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        @{ string active = "active"; }
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewBag.Title == "Index" ? "active" : "")" href="/Index">Home</a>
+                        </li>
+                        @*<li class="nav-item">
+                                <a class="nav-link @(ViewBag.Title == "About" ? "active" : "")" href="/About">About</a>
+                            </li>*@
+                        @*<li class="nav-item">
+                                <a class="nav-link @(ViewBag.Title == "Services" ? "active" : "")" href="/Services">Services</a>
+                            </li>*@
+                        @*<li class="nav-item dropdown">
+                                <a class="nav-link" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages <i class="fas fa-sort-down"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+                                    <a class="dropdown-item" href="faq.html">FAQ</a>
+                                    <a class="dropdown-item" href="404.html">404</a>
+                                    <a class="dropdown-item" href="pricing.html">Pricing Table</a>
+                                </div>
+                            </li>*@
+                        @*<li class="nav-item dropdown">
+                                <a class="nav-link" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Portfolio <i class="fas fa-sort-down"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                                    <a class="dropdown-item" href="~/content/ZoneTemplate/portfolio-3-col.html">3 Column Portfolio</a>
+                                    <a class="dropdown-item" href="~/content/ZoneTemplate/portfolio-4-col.html">4 Column Portfolio</a>
+                                    <a class="dropdown-item" href="~/content/ZoneTemplate/portfolio-item.html">Single Portfolio Item</a>
+                                </div>
+                            </li>*@
+                        @*<li class="nav-item dropdown">
+                                <a class="nav-link" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog <i class="fas fa-sort-down"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+                                    <a class="dropdown-item" href="~/content/ZoneTemplate/blog.html">Blog</a>
+                                    <a class="dropdown-item" href="~/content/ZoneTemplate/blog-post.html">Blog Post</a>
+                                </div>
+                            </li>*@
+                        @if (!Request.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewBag.Title == "Contact" ? "active" : "")" href="/Contact">Contact</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewBag.Title == "Dashboard" || ViewBag.Title == "Dashboard - Staff" || ViewBag.Title == "New Parent" || ViewBag.Title == "New Student" || ViewBag.Title == "Edit Student" || ViewBag.Title == "New Course" || ViewBag.Title == "Edit Course" || ViewBag.Title == "Questions" ? "active" : "")" href="/Dashboard/Index">Dashboard</a>
+                            </li>
+                        }
+
+                        @*<li class="nav-item">
+                                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                                </fb:login-button>
+                            </li>*@
+                        @Html.Partial("_LoginPartial")
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        @RenderBody()
+
+        <!-- /.container -->
+        <!--footer starts from here-->
+        @{
+            if (ViewBag.Title != "Index")
+            {
+                <footer class="footer">
+                    <div class="container bottom_border">
+                        <div class="row">
+                            <div class="col-md-8 col">
+                                @*col-lg-3 col-md-6 col-sm-6*@
+                                <h5 class="headin5_amrc col_white_amrc pt2">About Us</h5>
+                                <!--headin5_amrc-->
+                                <p class="mb10">Our group of professionals help parents and teachers communicate more effectively in order to improve children's performance in school.  We have a track record of helping students increase their grades and participation in school.  We absolutely love our communities and cannot wait to work with you!</p>
+                                <ul class="footer-social">
+                                    <li><a class="facebook hb-xs-margin" href="https://www.facebook.com/Parent-Agent-101080284977781"><span class="hb hb-xs spin hb-facebook"><i class="fab fa-facebook-f"></i></span></a></li>
+                                    @*<li><a class="twitter hb-xs-margin" href="#"><span class="hb hb-xs spin hb-twitter"><i class="fab fa-twitter"></i></span></a></li>
+                                        <li><a class="instagram hb-xs-margin" href="#"><span class="hb hb-xs spin hb-instagram"><i class="fab fa-instagram"></i></span></a></li>
+                                        <li><a class="googleplus hb-xs-margin" href="#"><span class="hb hb-xs spin hb-google-plus"><i class="fab fa-google-plus-g"></i></span></a></li>
+                                        <li><a class="dribbble hb-xs-margin" href="#"><span class="hb hb-xs spin hb-dribbble"><i class="fab fa-dribbble"></i></span></a></li>*@
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                @*col-lg-3 col-md-6 col-sm-6*@
+                                <h5 class="headin5_amrc col_white_amrc pt2">Quick links</h5>
+                                <!--headin5_amrc-->
+                                <ul class="footer_ul_amrc">
+                                    <li><a href="/Dashboard/Index"><i class="fas fa-long-arrow-alt-right"></i>Dashboard</a></li>
+                                    <li><a href="/Account/Login"><i class="fas fa-long-arrow-alt-right"></i>Parent Login</a></li>
+                                    @*<li><a href="#"><i class="fas fa-long-arrow-alt-right"></i>Our Team </a></li>
+                                        <li><a href="#"><i class="fas fa-long-arrow-alt-right"></i>About Us</a></li>
+                                        <li><a href="#"><i class="fas fa-long-arrow-alt-right"></i>Our Services</a></li>*@
+                                    <li><a href="/Home/Contact"><i class="fas fa-long-arrow-alt-right"></i>Contact Us</a></li>
+                                    <li><a href="/Account/Login"><i class="fas fa-long-arrow-alt-right"></i>Staff Login</a></li>
+                                </ul>
+                                <!--footer_ul_amrc ends here-->
+                            </div>
+                            <!--<div class="col-lg-3 col-md-6 col-sm-6 col">
+                            <h5 class="headin5_amrc col_white_amrc pt2">Follow us</h5>-->
+                            <!--headin5_amrc ends here-->
+                            <!--<ul class="footer_ul2_amrc">
+                                <li>
+                                    <a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a>
+                                    <p>Lorem Ipsum is simply dummy...<a href="#">https://www.lipsum.com/</a></p>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a>
+                                    <p>Lorem Ipsum is simply dummy...<a href="#">https://www.lipsum.com/</a></p>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a>
+                                    <p>Lorem Ipsum is simply dummy...<a href="#">https://www.lipsum.com/</a></p>
+                                </li>
+                            </ul>-->
+                            <!--footer_ul2_amrc ends here-->
+                            <!--</div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 ">
+                                <div class="news-box">
+                                    <h5 class="headin5_amrc col_white_amrc pt2">Newsletter</h5>
+                                    <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</p>
+                                    <form action="#">
+                                        <div class="input-group">
+                                            <input class="form-control" placeholder="Search for..." type="text">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-secondary" type="button">Go!</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="container">
+                        @*<p class="copyright text-center">
+                                All Rights Reserved. &copy; 2018 <a href="#">Zonebiz</a> Design By :
+                                <a href="https://html.design/">html design</a>
+                            </p>*@
+                        <p class="copyright text-center">
+                            All Rights Reserved. &copy; 2020 - Design By Willie Sandoval
+                        </p>
+                    </div>
+                </footer>
+            }
+            else
+            {
+                <footer class="">
+                    <div class="lazy" data-loader="customLoader_footer">
+                        <div class="inner"></div>
+                    </div>
+                    <div id="template_footer" class="" style="display:none;">
+                        <div class="footer">
+                            <div class="container bottom_border">
+                                <div class="row">
+                                    <div class="col-md-8 col">
+                                        @*col-lg-3 col-md-6 col-sm-6*@
+                                        <h5 class="headin5_amrc col_white_amrc pt2">About Us</h5>
+                                        <!--headin5_amrc-->
+                                        <p class="mb10">Our group of professionals help parents and teachers communicate more effectively in order to improve children's performance in school.  We have a track record of helping students increase their grades and participation in school.  We absolutely love our communities and cannot wait to work with you!</p>
+                                        <ul class="footer-social">
+                                            <li><a class="facebook hb-xs-margin" href="https://www.facebook.com/Parent-Agent-101080284977781"><span class="hb hb-xs spin hb-facebook"><i class="fab fa-facebook-f"></i></span></a></li>
+                                            @*<li><a class="twitter hb-xs-margin" href="#"><span class="hb hb-xs spin hb-twitter"><i class="fab fa-twitter"></i></span></a></li>
+                                                <li><a class="instagram hb-xs-margin" href="#"><span class="hb hb-xs spin hb-instagram"><i class="fab fa-instagram"></i></span></a></li>
+                                                <li><a class="googleplus hb-xs-margin" href="#"><span class="hb hb-xs spin hb-google-plus"><i class="fab fa-google-plus-g"></i></span></a></li>
+                                                <li><a class="dribbble hb-xs-margin" href="#"><span class="hb hb-xs spin hb-dribbble"><i class="fab fa-dribbble"></i></span></a></li>*@
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @*col-lg-3 col-md-6 col-sm-6*@
+                                        <h5 class="headin5_amrc col_white_amrc pt2">Quick links</h5>
+                                        <!--headin5_amrc-->
+                                        <ul class="footer_ul_amrc">
+                                            <li><a href="/Dashboard/Index"><i class="fas fa-long-arrow-alt-right"></i>Dashboard</a></li>
+                                            <li><a href="/Account/Login"><i class="fas fa-long-arrow-alt-right"></i>Parent Login</a></li>
+                                            @*<li><a href="#"><i class="fas fa-long-arrow-alt-right"></i>Our Team </a></li>
+                                                <li><a href="#"><i class="fas fa-long-arrow-alt-right"></i>About Us</a></li>
+                                                <li><a href="#"><i class="fas fa-long-arrow-alt-right"></i>Our Services</a></li>*@
+                                            <li><a href="/Home/Contact"><i class="fas fa-long-arrow-alt-right"></i>Contact Us</a></li>
+                                            <li><a href="/Account/Login"><i class="fas fa-long-arrow-alt-right"></i>Staff Login</a></li>
+                                        </ul>
+                                        <!--footer_ul_amrc ends here-->
+                                    </div>
+                                    <!--<div class="col-lg-3 col-md-6 col-sm-6 col">
+                                    <h5 class="headin5_amrc col_white_amrc pt2">Follow us</h5>-->
+                                    <!--headin5_amrc ends here-->
+                                    <!--<ul class="footer_ul2_amrc">
+                                        <li>
+                                            <a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a>
+                                            <p>Lorem Ipsum is simply dummy...<a href="#">https://www.lipsum.com/</a></p>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a>
+                                            <p>Lorem Ipsum is simply dummy...<a href="#">https://www.lipsum.com/</a></p>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a>
+                                            <p>Lorem Ipsum is simply dummy...<a href="#">https://www.lipsum.com/</a></p>
+                                        </li>
+                                    </ul>-->
+                                    <!--footer_ul2_amrc ends here-->
+                                    <!--</div>
+                                    <div class="col-lg-3 col-md-6 col-sm-6 ">
+                                        <div class="news-box">
+                                            <h5 class="headin5_amrc col_white_amrc pt2">Newsletter</h5>
+                                            <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</p>
+                                            <form action="#">
+                                                <div class="input-group">
+                                                    <input class="form-control" placeholder="Search for..." type="text">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-secondary" type="button">Go!</button>
+                                                    </span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="container">
+                                @*<p class="copyright text-center">
+                                        All Rights Reserved. &copy; 2018 <a href="#">Zonebiz</a> Design By :
+                                        <a href="https://html.design/">html design</a>
+                                    </p>*@
+                                <p class="copyright text-center">
+                                    All Rights Reserved. &copy; 2020 - Design By Willie Sandoval
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <div id="afterfooter" class="col-lg-12" style="margin:100px;">&nbsp;</div>
+            }
+        }
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/allJS")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
